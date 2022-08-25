@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qihang.news.mapper.QhArticleCategoryDao">
+  <resultMap id="BaseResultMap" type="com.qihang.news.entity.QhArticleCategoryEntity">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="created_time" jdbcType="TIMESTAMP" property="createdTime" />
+    <result column="updated_time" jdbcType="TIMESTAMP" property="updatedTime" />
+    <result column="is_delete" jdbcType="TINYINT" property="delete" />
+    <result column="parent_id" jdbcType="BIGINT" property="parentId" />
+    <result column="category_name" jdbcType="VARCHAR" property="categoryName" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, created_time, updated_time, is_delete, parent_id, category_name
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from qh_article_category
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from qh_article_category
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.qihang.news.entity.QhArticleCategoryEntity" >
+    insert into qh_article_category (created_time, updated_time, is_delete, 
+      parent_id, category_name)
+    values (#{createdTime,jdbcType=TIMESTAMP}, #{updatedTime,jdbcType=TIMESTAMP}, #{isDelete,jdbcType=TINYINT}, 
+      #{parentId,jdbcType=BIGINT}, #{categoryName,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.qihang.news.entity.QhArticleCategoryEntity" >
+    insert into qh_article_category
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="createdTime != null">
+        created_time,
+      </if>
+      <if test="updatedTime != null">
+        updated_time,
+      </if>
+      <if test="isDelete != null">
+        is_delete,
+      </if>
+      <if test="parentId != null">
+        parent_id,
+      </if>
+      <if test="categoryName != null">
+        category_name,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="createdTime != null">
+        #{createdTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedTime != null">
+        #{updatedTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDelete != null">
+        #{isDelete,jdbcType=TINYINT},
+      </if>
+      <if test="parentId != null">
+        #{parentId,jdbcType=BIGINT},
+      </if>
+      <if test="categoryName != null">
+        #{categoryName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.qihang.news.entity.QhArticleCategoryEntity">
+    update qh_article_category
+    <set>
+      <if test="createdTime != null">
+        created_time = #{createdTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedTime != null">
+        updated_time = #{updatedTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDelete != null">
+        is_delete = #{isDelete,jdbcType=TINYINT},
+      </if>
+      <if test="parentId != null">
+        parent_id = #{parentId,jdbcType=BIGINT},
+      </if>
+      <if test="categoryName != null">
+        category_name = #{categoryName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.qihang.news.entity.QhArticleCategoryEntity">
+    update qh_article_category
+    set created_time = #{createdTime,jdbcType=TIMESTAMP},
+      updated_time = #{updatedTime,jdbcType=TIMESTAMP},
+      is_delete = #{isDelete,jdbcType=TINYINT},
+      parent_id = #{parentId,jdbcType=BIGINT},
+      category_name = #{categoryName,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

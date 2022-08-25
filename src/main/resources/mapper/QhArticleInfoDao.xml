@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qihang.news.mapper.QhArticleInfoDao">
+  <resultMap id="BaseResultMap" type="com.qihang.news.entity.QhArticleInfoEntity">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="created_time" jdbcType="TIMESTAMP" property="createdTime" />
+    <result column="updated_time" jdbcType="TIMESTAMP" property="updatedTime" />
+    <result column="is_delete" jdbcType="TINYINT" property="delete" />
+    <result column="big_category_id" jdbcType="BIGINT" property="bigCategoryId" />
+    <result column="small_category_id" jdbcType="BIGINT" property="smallCategoryId" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="content" jdbcType="VARCHAR" property="content" />
+    <result column="author" jdbcType="VARCHAR" property="author" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, created_time, updated_time, is_delete, big_category_id, small_category_id, title, 
+    content, author
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from qh_article_info
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <select id="selectByBigCategoryId" resultType="com.qihang.news.entity.QhArticleInfoEntity">
+    select
+    <include refid="Base_Column_List" />
+    from qh_article_info
+    <where>
+      <if test="bigCategoryId != null">
+        big_category_id,
+      </if>
+      <if test="smallCategoryId != null">
+        small_category_id,
+      </if>
+    </where>
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from qh_article_info
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.qihang.news.entity.QhArticleInfoEntity" useGeneratedKeys="true">
+    insert into qh_article_info (created_time, updated_time, is_delete, 
+      big_category_id, small_category_id, title, 
+      content, author)
+    values (#{createdTime,jdbcType=TIMESTAMP}, #{updatedTime,jdbcType=TIMESTAMP}, #{isDelete,jdbcType=TINYINT}, 
+      #{bigCategoryId,jdbcType=BIGINT}, #{smallCategoryId,jdbcType=BIGINT}, #{title,jdbcType=VARCHAR}, 
+      #{content,jdbcType=VARCHAR}, #{author,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.qihang.news.entity.QhArticleInfoEntity" useGeneratedKeys="true">
+    insert into qh_article_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="createdTime != null">
+        created_time,
+      </if>
+      <if test="updatedTime != null">
+        updated_time,
+      </if>
+      <if test="isDelete != null">
+        is_delete,
+      </if>
+      <if test="bigCategoryId != null">
+        big_category_id,
+      </if>
+      <if test="smallCategoryId != null">
+        small_category_id,
+      </if>
+      <if test="title != null">
+        title,
+      </if>
+      <if test="content != null">
+        content,
+      </if>
+      <if test="author != null">
+        author,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="createdTime != null">
+        #{createdTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedTime != null">
+        #{updatedTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDelete != null">
+        #{isDelete,jdbcType=TINYINT},
+      </if>
+      <if test="bigCategoryId != null">
+        #{bigCategoryId,jdbcType=BIGINT},
+      </if>
+      <if test="smallCategoryId != null">
+        #{smallCategoryId,jdbcType=BIGINT},
+      </if>
+      <if test="title != null">
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null">
+        #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="author != null">
+        #{author,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.qihang.news.entity.QhArticleInfoEntity">
+    update qh_article_info
+    <set>
+      <if test="createdTime != null">
+        created_time = #{createdTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedTime != null">
+        updated_time = #{updatedTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDelete != null">
+        is_delete = #{isDelete,jdbcType=TINYINT},
+      </if>
+      <if test="bigCategoryId != null">
+        big_category_id = #{bigCategoryId,jdbcType=BIGINT},
+      </if>
+      <if test="smallCategoryId != null">
+        small_category_id = #{smallCategoryId,jdbcType=BIGINT},
+      </if>
+      <if test="title != null">
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null">
+        content = #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="author != null">
+        author = #{author,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.qihang.news.entity.QhArticleInfoEntity">
+    update qh_article_info
+    set created_time = #{createdTime,jdbcType=TIMESTAMP},
+      updated_time = #{updatedTime,jdbcType=TIMESTAMP},
+      is_delete = #{isDelete,jdbcType=TINYINT},
+      big_category_id = #{bigCategoryId,jdbcType=BIGINT},
+      small_category_id = #{smallCategoryId,jdbcType=BIGINT},
+      title = #{title,jdbcType=VARCHAR},
+      content = #{content,jdbcType=VARCHAR},
+      author = #{author,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>
